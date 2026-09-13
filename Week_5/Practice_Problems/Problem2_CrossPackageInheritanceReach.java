@@ -1,37 +1,27 @@
-public class Problem2_ReferenceDeskSubclassReach {
+public class Problem2_CrossPackageInheritanceReach {
 
     static String classifyAccess(
             String fieldModifier,
             String accessorContext) {
 
         if (fieldModifier.equals("private")) {
-
-            if (accessorContext.equals("SAME_CLASS")) {
-                return "ALLOWED";
-            }
-
-            return "DENIED";
+            return accessorContext.equals("SAME_CLASS")
+                    ? "ALLOWED" : "DENIED";
         }
 
         if (fieldModifier.equals("default")) {
-
-            if (accessorContext.equals("SAME_CLASS")
-                    || accessorContext.equals("SAME_PACKAGE")) {
-                return "ALLOWED";
-            }
-
-            return "DENIED";
+            return accessorContext.equals("SAME_CLASS")
+                    || accessorContext.equals("SAME_PACKAGE")
+                    ? "ALLOWED" : "DENIED";
         }
 
         if (fieldModifier.equals("protected")) {
-
             if (accessorContext.equals("SAME_CLASS")
                     || accessorContext.equals("SAME_PACKAGE")
                     || accessorContext.equals(
-                            "SUBCLASS_DIFFERENT_PACKAGE_OWN_TYPE")) {
+                    "SUBCLASS_DIFFERENT_PACKAGE_OWN_TYPE")) {
                 return "ALLOWED";
             }
-
             return "DENIED";
         }
 
@@ -44,14 +34,12 @@ public class Problem2_ReferenceDeskSubclassReach {
 
     static String describeContext(String accessorContext) {
 
-        String[] words = accessorContext.toLowerCase().split("_");
-
+        String[] words = accessorContext.split("_");
         String result = "";
 
         for (String word : words) {
-
-            result += Character.toUpperCase(word.charAt(0))
-                    + word.substring(1)
+            result += word.substring(0, 1).toUpperCase()
+                    + word.substring(1).toLowerCase()
                     + " ";
         }
 
@@ -76,7 +64,7 @@ public class Problem2_ReferenceDeskSubclassReach {
 
         System.out.println(
                 describeContext(
-                        "SUBCLASS_DIFFERENT_PACKAGE_OWN_TYPE"
+                        "SUBCLASS_DIFFERENT_PACKAGE_PARENT_TYPE"
                 )
         );
     }
